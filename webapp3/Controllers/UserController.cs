@@ -17,6 +17,12 @@ namespace webapp3.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult Details(int id)
+        {
+            return View(GetUser(id));
+        }
+
         [HttpPost]
         public ActionResult Create(User user)
         {
@@ -58,6 +64,14 @@ namespace webapp3.Controllers
                 userList.Add(usersList);
             }
             return userList;
+        }
+
+        private User GetUser(int id)
+        {
+            var dbContext = new AppDbContext();
+            var user = dbContext.Users.Find(id);
+
+            return MapToUser(user);
         }
 
         private void DeleteUser(int id)
